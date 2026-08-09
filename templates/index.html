@@ -1,0 +1,957 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>NeuroScan AI | Brain MRI Analysis</title>
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='style.css') }}"
+    >
+
+</head>
+
+
+<body>
+
+
+<header class="navbar">
+
+    <div class="nav-container">
+
+        <div class="brand">
+
+            <div class="brand-icon">
+                ✦
+            </div>
+
+            <div class="brand-text">
+
+                <span class="brand-name">
+                    NeuroScan
+                </span>
+
+                <span class="brand-ai">
+                    AI
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <div class="system-status">
+
+            <span class="status-dot"></span>
+
+            AI System Ready
+
+        </div>
+
+    </div>
+
+</header>
+
+
+
+<main class="main-container">
+
+
+    <section class="hero">
+
+        <div class="hero-badge">
+            AI-POWERED MEDICAL IMAGING
+        </div>
+
+        <h1>
+            Brain MRI
+            <span>Analysis</span>
+        </h1>
+
+        <p>
+            Upload a brain MRI scan and receive an
+            AI-assisted classification using a trained
+            ResNet50 deep learning model.
+        </p>
+
+    </section>
+
+
+
+    {% if prediction %}
+
+
+    <section class="result-layout">
+
+
+        <!-- LEFT SIDE -->
+        <div class="image-card">
+
+            <div class="card-top">
+
+                <div>
+
+                    <span class="step">
+                        MRI SCAN
+                    </span>
+
+                    <h2>
+                        Uploaded Image
+                    </h2>
+
+                </div>
+
+                <div class="card-number">
+                    01
+                </div>
+
+            </div>
+
+
+            <div class="image-wrapper">
+
+                <img
+                    src="data:image/jpeg;base64,{{ image_data }}"
+                    alt="Uploaded Brain MRI"
+                >
+
+            </div>
+
+
+            <!-- NEW ANALYSIS BUTTON -->
+            <div class="new-analysis-wrapper">
+
+                <form
+                    action="{{ url_for('index') }}"
+                    method="GET"
+                >
+
+                    <button
+                        type="submit"
+                        class="new-analysis-btn"
+                    >
+                        + New Analysis
+                    </button>
+
+                </form>
+
+            </div>
+
+
+        </div>
+
+
+
+        <!-- RIGHT SIDE -->
+        <div class="card result-card">
+
+
+            <div class="card-top">
+
+                <div>
+
+                    <span class="step">
+                        AI ANALYSIS
+                    </span>
+
+                    <h2>
+                        Analysis Result
+                    </h2>
+
+                </div>
+
+                <div class="card-number">
+                    02
+                </div>
+
+            </div>
+
+
+
+            <div class="result-label">
+                PREDICTED CONDITION
+            </div>
+
+
+            <div class="prediction-result">
+                {{ info.title }}
+            </div>
+
+
+
+            <div class="confidence-section">
+
+                <div class="confidence-header">
+
+                    <span>
+                        Model Confidence
+                    </span>
+
+                    <strong>
+                        {{ "%.2f"|format(confidence) }}%
+                    </strong>
+
+                </div>
+
+
+                <div class="confidence-bar">
+
+                    <div
+                        class="confidence-fill dynamic-bar"
+                        data-value="{{ confidence }}"
+                    ></div>
+
+                </div>
+
+            </div>
+
+
+
+            <div class="all-probabilities">
+
+                <div class="probabilities-title">
+
+                    <h3>
+                        Classification Probabilities
+                    </h3>
+
+                    <span>
+                        Probability for each MRI category
+                    </span>
+
+                </div>
+
+
+                {% for name, value in probabilities.items() %}
+
+                <div
+                    class="probability-row
+                    {% if name == prediction %}predicted-row{% endif %}"
+                >
+
+                    <div class="probability-info">
+
+                        <span>
+
+                            {% if name == "glioma" %}
+                                Glioma
+                            {% elif name == "meningioma" %}
+                                Meningioma
+                            {% elif name == "pituitary" %}
+                                Pituitary
+                            {% else %}
+                                No Tumor
+                            {% endif %}
+
+                        </span>
+
+
+                        <strong>
+                            {{ "%.2f"|format(value) }}%
+                        </strong>
+
+                    </div>
+
+
+                    <div class="probability-bar">
+
+                        <div
+                            class="probability-fill
+                            {% if name == prediction %}predicted-fill{% endif %}
+                            dynamic-bar"
+                            data-value="{{ value }}"
+                        ></div>
+
+                    </div>
+
+
+                    {% if name == prediction %}
+
+                    <span class="predicted-badge">
+                        Predicted
+                    </span>
+
+                    {% endif %}
+
+                </div>
+
+                {% endfor %}
+
+            </div>
+
+
+        </div>
+
+    </section>
+
+
+
+    <!-- ABOUT THE RESULT -->
+
+    <div class="result-info">
+
+        <div class="info-card">
+
+            <div class="info-card-header">
+
+                <div class="info-icon">
+                    💡
+                </div>
+
+                <span>
+                    ABOUT THE RESULT
+                </span>
+
+            </div>
+
+
+            <h3>
+                What is {{ info.title }}?
+            </h3>
+
+
+            <p class="info-description">
+                {{ info.description }}
+            </p>
+
+
+            <p class="info-short">
+                {{ info.short }}
+            </p>
+
+        </div>
+
+
+        <!-- MEDICAL WARNING -->
+
+        <div class="medical-warning">
+
+            <div class="warning-icon">
+                ⚠️
+            </div>
+
+            <div class="warning-content">
+
+                <strong>
+                    Important Medical Notice
+                </strong>
+
+                <p>
+                    This application is an educational and research
+                    project based on a deep learning model. The prediction
+                    is not a medical diagnosis and should not be used to
+                    make medical decisions. A qualified healthcare
+                    professional must evaluate MRI scans and provide
+                    any diagnosis.
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    <section class="classification-section">
+
+        <div class="section-heading">
+
+            <span>
+                MODEL CLASSIFICATIONS
+            </span>
+
+            <h2>
+                Four MRI Categories
+            </h2>
+
+            <p>
+                The model classifies each uploaded MRI scan
+                into one of the following categories.
+            </p>
+
+        </div>
+
+
+
+        <div class="classes-grid">
+
+
+            <div class="class-box
+                {% if prediction == 'glioma' %}active-class{% endif %}"
+            >
+
+                <span class="class-number">
+                    01
+                </span>
+
+                <div class="class-icon">
+                    ◉
+                </div>
+
+                <h3>
+                    Glioma
+                </h3>
+
+                <p>
+                    Brain tumor classification
+                </p>
+
+                {% if prediction == 'glioma' %}
+                <span class="predicted-class-badge">
+                    Predicted
+                </span>
+                {% endif %}
+
+            </div>
+
+
+
+            <div class="class-box
+                {% if prediction == 'meningioma' %}active-class{% endif %}"
+            >
+
+                <span class="class-number">
+                    02
+                </span>
+
+                <div class="class-icon">
+                    ◉
+                </div>
+
+                <h3>
+                    Meningioma
+                </h3>
+
+                <p>
+                    Brain tumor classification
+                </p>
+
+                {% if prediction == 'meningioma' %}
+                <span class="predicted-class-badge">
+                    Predicted
+                </span>
+                {% endif %}
+
+            </div>
+
+
+
+            <div class="class-box
+                {% if prediction == 'pituitary' %}active-class{% endif %}"
+            >
+
+                <span class="class-number">
+                    03
+                </span>
+
+                <div class="class-icon">
+                    ◉
+                </div>
+
+                <h3>
+                    Pituitary
+                </h3>
+
+                <p>
+                    Pituitary tumor classification
+                </p>
+
+                {% if prediction == 'pituitary' %}
+                <span class="predicted-class-badge">
+                    Predicted
+                </span>
+                {% endif %}
+
+            </div>
+
+
+
+            <div class="class-box
+                {% if prediction == 'notumor' %}active-class{% endif %}"
+            >
+
+                <span class="class-number">
+                    04
+                </span>
+
+                <div class="class-icon">
+                    ◉
+                </div>
+
+                <h3>
+                    No Tumor
+                </h3>
+
+                <p>
+                    No tumor classification
+                </p>
+
+                {% if prediction == 'notumor' %}
+                <span class="predicted-class-badge">
+                    Predicted
+                </span>
+                {% endif %}
+
+            </div>
+
+
+        </div>
+
+    </section>
+
+
+
+    {% else %}
+
+
+
+    <section class="analysis-grid">
+
+
+        <div class="card upload-card">
+
+
+            <div class="card-top">
+
+                <div>
+
+                    <span class="step">
+                        STEP 01
+                    </span>
+
+                    <h2>
+                        Upload MRI Scan
+                    </h2>
+
+                </div>
+
+                <div class="card-number">
+                    01
+                </div>
+
+            </div>
+
+
+            <p class="card-description">
+                Select a clear MRI image in JPG, JPEG,
+                or PNG format.
+            </p>
+
+
+            <form
+                method="POST"
+                enctype="multipart/form-data"
+                id="uploadForm"
+            >
+
+
+                <label
+                    for="mri_image"
+                    class="upload-zone"
+                >
+
+
+                    <input
+                        type="file"
+                        id="mri_image"
+                        name="mri_image"
+                        accept=".jpg,.jpeg,.png"
+                        required
+                    >
+
+
+                    <div id="uploadContent">
+
+                        <div class="upload-icon">
+                            ↑
+                        </div>
+
+                        <h3>
+                            Upload MRI Image
+                        </h3>
+
+                        <p>
+                            Click here to browse your files
+                        </p>
+
+                        <span class="supported-files">
+                            JPG • JPEG • PNG
+                        </span>
+
+                    </div>
+
+
+                    <div
+                        id="fileSelected"
+                        class="file-selected hidden"
+                    >
+
+                        <div class="check-icon">
+                            ✓
+                        </div>
+
+                        <div class="selected-info">
+
+                            <strong id="fileName">
+                                MRI selected
+                            </strong>
+
+                            <span>
+                                Ready for analysis
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                </label>
+
+
+                <button
+                    type="submit"
+                    class="analyze-btn"
+                    id="analyzeButton"
+                >
+
+                    Analyze MRI
+
+                    <span>
+                        →
+                    </span>
+
+                </button>
+
+
+            </form>
+
+
+            {% if error %}
+
+            <div class="error-box">
+
+                <strong>
+                    Unable to analyze image
+                </strong>
+
+                <p>
+                    {{ error }}
+                </p>
+
+            </div>
+
+            {% endif %}
+
+
+        </div>
+
+
+
+        <div class="card empty-card">
+
+
+            <div class="card-top">
+
+                <div>
+
+                    <span class="step">
+                        STEP 02
+                    </span>
+
+                    <h2>
+                        Analysis Result
+                    </h2>
+
+                </div>
+
+                <div class="card-number">
+                    02
+                </div>
+
+            </div>
+
+
+            <div class="empty-result">
+
+                <div class="brain-circle">
+                    🧠
+                </div>
+
+                <h3>
+                    Ready for Analysis
+                </h3>
+
+                <p>
+                    Upload a brain MRI scan to begin
+                    AI-powered classification.
+                </p>
+
+                <div class="waiting-status">
+
+                    <span></span>
+
+                    Waiting for MRI image
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+
+    </section>
+
+
+
+    <section class="classification-section">
+
+        <div class="section-heading">
+
+            <span>
+                MODEL CLASSIFICATIONS
+            </span>
+
+            <h2>
+                Four MRI Categories
+            </h2>
+
+            <p>
+                The model classifies each uploaded MRI scan
+                into one of the following categories.
+            </p>
+
+        </div>
+
+
+        <div class="classes-grid">
+
+
+            <div class="class-box">
+
+                <span class="class-number">
+                    01
+                </span>
+
+                <div class="class-icon">
+                    ◉
+                </div>
+
+                <h3>
+                    Glioma
+                </h3>
+
+                <p>
+                    Brain tumor classification
+                </p>
+
+            </div>
+
+
+            <div class="class-box">
+
+                <span class="class-number">
+                    02
+                </span>
+
+                <div class="class-icon">
+                    ◉
+                </div>
+
+                <h3>
+                    Meningioma
+                </h3>
+
+                <p>
+                    Brain tumor classification
+                </p>
+
+            </div>
+
+
+            <div class="class-box">
+
+                <span class="class-number">
+                    03
+                </span>
+
+                <div class="class-icon">
+                    ◉
+                </div>
+
+                <h3>
+                    Pituitary
+                </h3>
+
+                <p>
+                    Pituitary tumor classification
+                </p>
+
+            </div>
+
+
+            <div class="class-box">
+
+                <span class="class-number">
+                    04
+                </span>
+
+                <div class="class-icon">
+                    ◉
+                </div>
+
+                <h3>
+                    No Tumor
+                </h3>
+
+                <p>
+                    No tumor classification
+                </p>
+
+            </div>
+
+
+        </div>
+
+    </section>
+
+
+
+    {% endif %}
+
+
+</main>
+
+
+
+<footer>
+
+    <div class="footer-content">
+
+        <div>
+
+            <strong>
+                NeuroScan AI
+            </strong>
+
+            <span>
+                Brain MRI Classification System
+            </span>
+
+        </div>
+
+        <p>
+            Educational & Research Use
+        </p>
+
+    </div>
+
+</footer>
+
+
+
+<script>
+
+    const fileInput =
+        document.getElementById("mri_image");
+
+    const uploadContent =
+        document.getElementById("uploadContent");
+
+    const fileSelected =
+        document.getElementById("fileSelected");
+
+    const fileName =
+        document.getElementById("fileName");
+
+    const uploadForm =
+        document.getElementById("uploadForm");
+
+    const analyzeButton =
+        document.getElementById("analyzeButton");
+
+
+    if (fileInput) {
+
+        fileInput.addEventListener(
+            "change",
+            function () {
+
+                if (this.files.length > 0) {
+
+                    uploadContent.style.display = "none";
+
+                    fileSelected.classList.remove("hidden");
+
+                    fileName.textContent =
+                        this.files[0].name;
+                }
+
+            }
+        );
+
+    }
+
+
+    if (uploadForm) {
+
+        uploadForm.addEventListener(
+            "submit",
+            function () {
+
+                analyzeButton.innerHTML =
+                    "Analyzing MRI...";
+
+                analyzeButton.disabled = true;
+
+            }
+        );
+
+    }
+
+
+    const dynamicBars =
+        document.querySelectorAll(".dynamic-bar");
+
+
+    dynamicBars.forEach(
+        function (bar) {
+
+            let value =
+                parseFloat(
+                    bar.getAttribute("data-value")
+                );
+
+
+            if (isNaN(value)) {
+                value = 0;
+            }
+
+
+            value = Math.max(
+                0,
+                Math.min(100, value)
+            );
+
+
+            bar.style.width =
+                value + "%";
+
+        }
+    );
+
+</script>
+
+
+</body>
+
+</html>
