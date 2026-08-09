@@ -2,18 +2,42 @@ from flask import Flask, render_template, request
 import torch
 import torch.nn as nn
 from torchvision import models, transforms
-from PIL import Image
+from PIL import Image, ImageOps
 import os
 import base64
 from io import BytesIO
 
 
+# =========================================================
+# Flask App
+# =========================================================
+
 app = Flask(__name__)
-app.config["MAX_CONTENT_LENGTH"] = 10 * 1024 * 1024
+
+# Maximum upload size: 5 MB
+app.config["MAX_CONTENT_LENGTH"] = 5 * 1024 * 1024
 
 
-device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+# =========================================================
+# CPU optimization
+# =========================================================
 
+# Render Free has very limited CPU/RAM.
+# Using fewer threads helps prevent memory spikes.
+torch.set_num_threads(1)
+
+try:
+    torch.set_num_interop_threads(1)
+except RuntimeError:
+    pass
+
+
+device = torch.device("cpu")
+
+
+# =========================================================
+# Class names
+# =========================================================
 
 class_names = [
     "glioma",
@@ -22,6 +46,10 @@ class_names = [
     "notumor"
 ]
 
+
+# =========================================================
+# Condition information
+# =========================================================
 
 condition_info = {
     "glioma": {
@@ -65,6 +93,13 @@ condition_info = {
 }
 
 
+# =========================================================
+# Build model
+# =========================================================
+
+print("Loading brain tumor model...")
+
+
 model = models.resnet50(weights=None)
 
 model.fc = nn.Sequential(
@@ -73,20 +108,39 @@ model.fc = nn.Sequential(
 )
 
 
+# =========================================================
+# Model path
+# =========================================================
+
 model_path = os.path.join(
-    os.path.dirname(__file__),
+    os.path.dirname(os.path.abspath(__file__)),
     "best_brain_model.pth"
 )
 
+
+# =========================================================
+# Load model
+# =========================================================
+
 checkpoint = torch.load(
     model_path,
-    map_location=device
+    map_location="cpu"
 )
 
 model.load_state_dict(checkpoint)
+
+# Release checkpoint memory after loading
+del checkpoint
+
 model.to(device)
 model.eval()
 
+print("Brain tumor model loaded successfully.")
+
+
+# =========================================================
+# Image transformation
+# =========================================================
 
 transform = transforms.Compose([
     transforms.Resize((224, 224)),
@@ -98,37 +152,88 @@ transform = transforms.Compose([
 ])
 
 
+# =========================================================
+# Convert image to Base64
+# =========================================================
+
 def image_to_base64(image):
+
+    # Make a copy so we don't modify the original image
+    display_image = image.copy()
+
+    # Resize the image used for displaying on the website.
+    # This prevents sending a huge image back to the browser.
+    display_image.thumbnail((800, 800))
+
     buffer = BytesIO()
-    image.save(buffer, format="JPEG")
+
+    display_image.save(
+        buffer,
+        format="JPEG",
+        quality=80,
+        optimize=True
+    )
 
     return base64.b64encode(
         buffer.getvalue()
     ).decode("utf-8")
 
 
+# =========================================================
+# Prediction
+# =========================================================
+
 def predict_image(image):
+
+    image = ImageOps.exif_transpose(image)
     image = image.convert("RGB")
 
+    # Resize only for model inference
     tensor = transform(image)
-    tensor = tensor.unsqueeze(0).to(device)
 
-    with torch.no_grad():
+    tensor = tensor.unsqueeze(0)
+
+    # CPU
+    tensor = tensor.to(device)
+
+    # inference_mode uses less memory than normal inference
+    with torch.inference_mode():
+
         output = model(tensor)
-        probabilities = torch.softmax(output, dim=1)[0]
+
+        probabilities = torch.softmax(
+            output,
+            dim=1
+        )[0]
 
     index = torch.argmax(probabilities).item()
 
     prediction = class_names[index]
-    confidence = probabilities[index].item() * 100
+
+    confidence = (
+        probabilities[index].item() * 100
+    )
 
     all_probabilities = {
         name: probabilities[i].item() * 100
         for i, name in enumerate(class_names)
     }
 
-    return prediction, confidence, all_probabilities
+    # Release tensors
+    del tensor
+    del output
+    del probabilities
 
+    return (
+        prediction,
+        confidence,
+        all_probabilities
+    )
+
+
+# =========================================================
+# Main route
+# =========================================================
 
 @app.route("/", methods=["GET", "POST"])
 def index():
@@ -148,18 +253,52 @@ def index():
             error = "Please select an MRI image."
 
         else:
+
             try:
-                image = Image.open(file.stream).convert("RGB")
 
-                prediction, confidence, probabilities = predict_image(image)
+                # Open uploaded image
+                image = Image.open(file.stream)
 
+                # Convert to RGB
+                image = ImageOps.exif_transpose(image)
+                image = image.convert("RGB")
+
+                # Limit extremely large images
+                # before processing.
+                max_dimension = 2000
+
+                if (
+                    image.width > max_dimension
+                    or image.height > max_dimension
+                ):
+
+                    image.thumbnail(
+                        (max_dimension, max_dimension),
+                        Image.Resampling.LANCZOS
+                    )
+
+                # Run AI prediction
+                (
+                    prediction,
+                    confidence,
+                    probabilities
+                ) = predict_image(image)
+
+                # Create smaller image for website
                 image_data = image_to_base64(image)
 
-                info = condition_info[prediction]
+                # Get information about prediction
+                info = condition_info.get(prediction)
 
             except Exception as e:
+
+                print("IMAGE PROCESSING ERROR:")
                 print(e)
-                error = "Unable to process this image. Please upload a valid MRI image."
+
+                error = (
+                    "Unable to process this image. "
+                    "Please upload a valid MRI image."
+                )
 
     return render_template(
         "index.html",
@@ -172,9 +311,18 @@ def index():
     )
 
 
+# =========================================================
+# Local development
+# =========================================================
+
 if __name__ == "__main__":
+
+    port = int(
+        os.environ.get("PORT", 5000)
+    )
+
     app.run(
-        debug=True,
-        host="127.0.0.1",
-        port=5000
+        host="0.0.0.0",
+        port=port,
+        debug=False
     )
