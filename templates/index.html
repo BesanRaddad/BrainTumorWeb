@@ -17,11 +17,218 @@
         href="{{ url_for('static', filename='style.css') }}"
     >
 
+    <!-- =====================================================
+         Additional styling for MRI validation rejection
+         ===================================================== -->
+
+    <style>
+
+        .rejection-layout {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 28px;
+            margin-bottom: 40px;
+        }
+
+        .rejection-image-card,
+        .rejection-card {
+            min-height: 520px;
+        }
+
+        .rejection-image-wrapper {
+            width: 100%;
+            height: 360px;
+            overflow: hidden;
+            border-radius: 18px;
+            margin-top: 20px;
+            background: rgba(0, 0, 0, 0.18);
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .rejection-image-wrapper img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            display: block;
+        }
+
+        .rejection-content {
+            min-height: 390px;
+
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+
+            text-align: center;
+
+            padding: 30px;
+        }
+
+        .rejection-icon {
+            width: 82px;
+            height: 82px;
+
+            border-radius: 50%;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            font-size: 36px;
+
+            margin-bottom: 22px;
+
+            background: rgba(255, 170, 70, 0.12);
+
+            border: 1px solid rgba(255, 170, 70, 0.28);
+        }
+
+        .rejection-badge {
+            display: inline-flex;
+
+            padding: 9px 16px;
+
+            border-radius: 999px;
+
+            font-size: 12px;
+            font-weight: 700;
+
+            letter-spacing: 1.2px;
+
+            margin-bottom: 18px;
+
+            background: rgba(255, 170, 70, 0.12);
+
+            border: 1px solid rgba(255, 170, 70, 0.28);
+        }
+
+        .rejection-content h3 {
+            font-size: 25px;
+
+            margin: 0 0 14px;
+
+            line-height: 1.35;
+        }
+
+        .rejection-content p {
+            max-width: 500px;
+
+            margin: 0 auto 12px;
+
+            line-height: 1.7;
+
+            opacity: 0.8;
+        }
+
+        .rejection-content .rejection-hint {
+            font-size: 14px;
+
+            opacity: 0.6;
+
+            margin-top: 8px;
+        }
+
+        .rejection-status {
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            gap: 8px;
+
+            margin-top: 20px;
+
+            font-size: 13px;
+
+            opacity: 0.65;
+        }
+
+        .rejection-status-dot {
+            width: 8px;
+            height: 8px;
+
+            border-radius: 50%;
+
+            background: #ffb15c;
+        }
+
+        .rejection-upload-wrapper {
+            margin-top: 24px;
+
+            display: flex;
+            justify-content: center;
+        }
+
+        .rejection-upload-btn {
+            border: none;
+
+            padding: 13px 22px;
+
+            border-radius: 12px;
+
+            cursor: pointer;
+
+            font-size: 14px;
+            font-weight: 700;
+
+            transition:
+                transform 0.2s ease,
+                opacity 0.2s ease;
+        }
+
+        .rejection-upload-btn:hover {
+            transform: translateY(-2px);
+            opacity: 0.9;
+        }
+
+        @media (max-width: 900px) {
+
+            .rejection-layout {
+                grid-template-columns: 1fr;
+            }
+
+            .rejection-image-card,
+            .rejection-card {
+                min-height: auto;
+            }
+
+            .rejection-image-wrapper {
+                height: 320px;
+            }
+
+        }
+
+        @media (max-width: 600px) {
+
+            .rejection-content {
+                padding: 25px 18px;
+            }
+
+            .rejection-content h3 {
+                font-size: 21px;
+            }
+
+            .rejection-image-wrapper {
+                height: 250px;
+            }
+
+        }
+
+    </style>
+
 </head>
 
 
 <body>
 
+
+<!-- =========================================================
+     NAVBAR
+     ========================================================= -->
 
 <header class="navbar">
 
@@ -62,8 +269,16 @@
 
 
 
+<!-- =========================================================
+     MAIN
+     ========================================================= -->
+
 <main class="main-container">
 
+
+    <!-- =====================================================
+         HERO
+         ===================================================== -->
 
     <section class="hero">
 
@@ -72,19 +287,31 @@
         </div>
 
         <h1>
+
             Brain MRI
-            <span>Analysis</span>
+
+            <span>
+                Analysis
+            </span>
+
         </h1>
 
         <p>
+
             Upload a brain MRI scan and receive an
             AI-assisted classification using a trained
             ResNet50 deep learning model.
+
         </p>
 
     </section>
 
 
+
+    <!-- =====================================================
+         CASE 1:
+         VALID BRAIN MRI
+         ===================================================== -->
 
     {% if prediction %}
 
@@ -92,8 +319,12 @@
     <section class="result-layout">
 
 
-        <!-- LEFT SIDE -->
+        <!-- =================================================
+             LEFT SIDE - IMAGE
+             ================================================= -->
+
         <div class="image-card">
+
 
             <div class="card-top">
 
@@ -108,6 +339,7 @@
                     </h2>
 
                 </div>
+
 
                 <div class="card-number">
                     01
@@ -126,7 +358,8 @@
             </div>
 
 
-            <!-- NEW ANALYSIS BUTTON -->
+            <!-- NEW ANALYSIS -->
+
             <div class="new-analysis-wrapper">
 
                 <form
@@ -138,7 +371,9 @@
                         type="submit"
                         class="new-analysis-btn"
                     >
+
                         + New Analysis
+
                     </button>
 
                 </form>
@@ -150,7 +385,10 @@
 
 
 
-        <!-- RIGHT SIDE -->
+        <!-- =================================================
+             RIGHT SIDE - RESULT
+             ================================================= -->
+
         <div class="card result-card">
 
 
@@ -168,6 +406,7 @@
 
                 </div>
 
+
                 <div class="card-number">
                     02
                 </div>
@@ -177,17 +416,23 @@
 
 
             <div class="result-label">
+
                 PREDICTED CONDITION
+
             </div>
 
 
+
             <div class="prediction-result">
+
                 {{ info.title }}
+
             </div>
 
 
 
             <div class="confidence-section">
+
 
                 <div class="confidence-header">
 
@@ -211,11 +456,17 @@
 
                 </div>
 
+
             </div>
 
 
 
+            <!-- =================================================
+                 ALL PROBABILITIES
+                 ================================================= -->
+
             <div class="all-probabilities">
+
 
                 <div class="probabilities-title">
 
@@ -230,35 +481,49 @@
                 </div>
 
 
+
                 {% for name, value in probabilities.items() %}
+
 
                 <div
                     class="probability-row
                     {% if name == prediction %}predicted-row{% endif %}"
                 >
 
+
                     <div class="probability-info">
 
                         <span>
 
                             {% if name == "glioma" %}
+
                                 Glioma
+
                             {% elif name == "meningioma" %}
+
                                 Meningioma
+
                             {% elif name == "pituitary" %}
+
                                 Pituitary
+
                             {% else %}
+
                                 No Tumor
+
                             {% endif %}
 
                         </span>
 
 
                         <strong>
+
                             {{ "%.2f"|format(value) }}%
+
                         </strong>
 
                     </div>
+
 
 
                     <div class="probability-bar">
@@ -273,32 +538,43 @@
                     </div>
 
 
+
                     {% if name == prediction %}
 
                     <span class="predicted-badge">
+
                         Predicted
+
                     </span>
 
                     {% endif %}
 
+
                 </div>
 
+
                 {% endfor %}
+
 
             </div>
 
 
         </div>
 
+
     </section>
 
 
 
-    <!-- ABOUT THE RESULT -->
+    <!-- =====================================================
+         ABOUT THE RESULT
+         ===================================================== -->
 
     <div class="result-info">
 
+
         <div class="info-card">
+
 
             <div class="info-card-header">
 
@@ -314,29 +590,43 @@
 
 
             <h3>
+
                 What is {{ info.title }}?
+
             </h3>
 
 
             <p class="info-description">
+
                 {{ info.description }}
+
             </p>
 
+
+            {% if info.short %}
 
             <p class="info-short">
+
                 {{ info.short }}
+
             </p>
 
+            {% endif %}
+
+
         </div>
+
 
 
         <!-- MEDICAL WARNING -->
 
         <div class="medical-warning">
 
+
             <div class="warning-icon">
                 ⚠️
             </div>
+
 
             <div class="warning-content">
 
@@ -345,23 +635,33 @@
                 </strong>
 
                 <p>
+
                     This application is an educational and research
                     project based on a deep learning model. The prediction
                     is not a medical diagnosis and should not be used to
                     make medical decisions. A qualified healthcare
                     professional must evaluate MRI scans and provide
                     any diagnosis.
+
                 </p>
 
             </div>
 
+
         </div>
+
 
     </div>
 
 
 
+    <!-- =====================================================
+         FOUR MRI CATEGORIES
+         ONLY SHOWN FOR VALID BRAIN MRI
+         ===================================================== -->
+
     <section class="classification-section">
+
 
         <div class="section-heading">
 
@@ -374,8 +674,10 @@
             </h2>
 
             <p>
+
                 The model classifies each uploaded MRI scan
                 into one of the following categories.
+
             </p>
 
         </div>
@@ -385,7 +687,10 @@
         <div class="classes-grid">
 
 
-            <div class="class-box
+            <!-- GLIOMA -->
+
+            <div
+                class="class-box
                 {% if prediction == 'glioma' %}active-class{% endif %}"
             >
 
@@ -405,17 +710,23 @@
                     Brain tumor classification
                 </p>
 
+
                 {% if prediction == 'glioma' %}
+
                 <span class="predicted-class-badge">
                     Predicted
                 </span>
+
                 {% endif %}
 
             </div>
 
 
 
-            <div class="class-box
+            <!-- MENINGIOMA -->
+
+            <div
+                class="class-box
                 {% if prediction == 'meningioma' %}active-class{% endif %}"
             >
 
@@ -435,17 +746,23 @@
                     Brain tumor classification
                 </p>
 
+
                 {% if prediction == 'meningioma' %}
+
                 <span class="predicted-class-badge">
                     Predicted
                 </span>
+
                 {% endif %}
 
             </div>
 
 
 
-            <div class="class-box
+            <!-- PITUITARY -->
+
+            <div
+                class="class-box
                 {% if prediction == 'pituitary' %}active-class{% endif %}"
             >
 
@@ -465,17 +782,23 @@
                     Pituitary tumor classification
                 </p>
 
+
                 {% if prediction == 'pituitary' %}
+
                 <span class="predicted-class-badge">
                     Predicted
                 </span>
+
                 {% endif %}
 
             </div>
 
 
 
-            <div class="class-box
+            <!-- NO TUMOR -->
+
+            <div
+                class="class-box
                 {% if prediction == 'notumor' %}active-class{% endif %}"
             >
 
@@ -495,10 +818,13 @@
                     No tumor classification
                 </p>
 
+
                 {% if prediction == 'notumor' %}
+
                 <span class="predicted-class-badge">
                     Predicted
                 </span>
+
                 {% endif %}
 
             </div>
@@ -506,16 +832,216 @@
 
         </div>
 
+
     </section>
 
 
 
-    {% else %}
+    <!-- =====================================================
+         CASE 2:
+         NOT A BRAIN MRI
+         ===================================================== -->
 
+    {% elif error == "Uploaded image is not a brain MRI." %}
+
+
+    <section class="rejection-layout">
+
+
+        <!-- =================================================
+             LEFT - UPLOADED IMAGE
+             ================================================= -->
+
+        <div class="card rejection-image-card">
+
+
+            <div class="card-top">
+
+                <div>
+
+                    <span class="step">
+                        IMAGE REVIEW
+                    </span>
+
+                    <h2>
+                        Uploaded Image
+                    </h2>
+
+                </div>
+
+
+                <div class="card-number">
+                    01
+                </div>
+
+            </div>
+
+
+
+            {% if image_data %}
+
+            <div class="rejection-image-wrapper">
+
+                <img
+                    src="data:image/jpeg;base64,{{ image_data }}"
+                    alt="Uploaded image"
+                >
+
+            </div>
+
+            {% endif %}
+
+
+
+            <div class="new-analysis-wrapper">
+
+                <form
+                    action="{{ url_for('index') }}"
+                    method="GET"
+                >
+
+                    <button
+                        type="submit"
+                        class="new-analysis-btn"
+                    >
+
+                        + Upload Another Image
+
+                    </button>
+
+                </form>
+
+            </div>
+
+
+        </div>
+
+
+
+        <!-- =================================================
+             RIGHT - VALIDATION RESULT
+             ================================================= -->
+
+        <div class="card rejection-card">
+
+
+            <div class="card-top">
+
+                <div>
+
+                    <span class="step">
+                        MRI VALIDATION
+                    </span>
+
+                    <h2>
+                        Image Rejected
+                    </h2>
+
+                </div>
+
+
+                <div class="card-number">
+                    02
+                </div>
+
+            </div>
+
+
+
+            <div class="rejection-content">
+
+
+                <div class="rejection-icon">
+                  <svg viewBox="0 0 100 100" aria-hidden="true">
+                    <path
+                      d="M50 8 L94 88 H6 Z"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="6"
+                      stroke-linejoin="round"
+                    />
+                 <line
+                  x1="50"
+                  y1="31"
+                  x2="50"
+                  y2="62"
+                 stroke="currentColor"
+                 stroke-width="6"
+                 stroke-linecap="round"
+                />
+                 <circle
+                  cx="50"
+                  cy="76"
+                  r="3.5"
+                 fill="currentColor"
+                />
+            </svg>
+        </div>
+
+
+                <div class="rejection-badge">
+
+                    NOT A BRAIN MRI
+
+                </div>
+
+
+                <h3>
+
+                    Uploaded image is not a brain MRI.
+
+                </h3>
+
+
+                <p>
+
+                    The image could not be identified as a
+                    brain MRI scan by our MRI validation system.
+
+                </p>
+
+
+                <p class="rejection-hint">
+
+                    Please upload a clear brain MRI image
+                    to continue with tumor classification.
+
+                </p>
+
+
+                <div class="rejection-status">
+
+                    <span class="rejection-status-dot"></span>
+
+                    MRI validation completed
+
+                </div>
+
+
+            </div>
+
+
+        </div>
+
+
+    </section>
+
+
+
+    <!-- =====================================================
+         CASE 3:
+         GENERIC ERROR
+         ===================================================== -->
+
+    {% else %}
 
 
     <section class="analysis-grid">
 
+
+        <!-- =================================================
+             UPLOAD CARD
+             ================================================= -->
 
         <div class="card upload-card">
 
@@ -534,6 +1060,7 @@
 
                 </div>
 
+
                 <div class="card-number">
                     01
                 </div>
@@ -541,10 +1068,14 @@
             </div>
 
 
+
             <p class="card-description">
+
                 Select a clear MRI image in JPG, JPEG,
                 or PNG format.
+
             </p>
+
 
 
             <form
@@ -569,25 +1100,32 @@
                     >
 
 
+
                     <div id="uploadContent">
+
 
                         <div class="upload-icon">
                             ↑
                         </div>
 
+
                         <h3>
                             Upload MRI Image
                         </h3>
+
 
                         <p>
                             Click here to browse your files
                         </p>
 
+
                         <span class="supported-files">
                             JPG • JPEG • PNG
                         </span>
 
+
                     </div>
+
 
 
                     <div
@@ -595,9 +1133,11 @@
                         class="file-selected hidden"
                     >
 
+
                         <div class="check-icon">
                             ✓
                         </div>
+
 
                         <div class="selected-info">
 
@@ -611,10 +1151,12 @@
 
                         </div>
 
+
                     </div>
 
 
                 </label>
+
 
 
                 <button
@@ -633,6 +1175,7 @@
 
 
             </form>
+
 
 
             {% if error %}
@@ -656,6 +1199,10 @@
 
 
 
+        <!-- =================================================
+             EMPTY RESULT CARD
+             ================================================= -->
+
         <div class="card empty-card">
 
 
@@ -673,6 +1220,7 @@
 
                 </div>
 
+
                 <div class="card-number">
                     02
                 </div>
@@ -680,20 +1228,27 @@
             </div>
 
 
+
             <div class="empty-result">
+
 
                 <div class="brain-circle">
                     🧠
                 </div>
 
+
                 <h3>
                     Ready for Analysis
                 </h3>
 
+
                 <p>
+
                     Upload a brain MRI scan to begin
                     AI-powered classification.
+
                 </p>
+
 
                 <div class="waiting-status">
 
@@ -702,6 +1257,7 @@
                     Waiting for MRI image
 
                 </div>
+
 
             </div>
 
@@ -713,7 +1269,12 @@
 
 
 
+    <!-- =====================================================
+         FOUR MRI CATEGORIES
+         ===================================================== -->
+
     <section class="classification-section">
+
 
         <div class="section-heading">
 
@@ -726,15 +1287,20 @@
             </h2>
 
             <p>
+
                 The model classifies each uploaded MRI scan
                 into one of the following categories.
+
             </p>
 
         </div>
 
 
+
         <div class="classes-grid">
 
+
+            <!-- GLIOMA -->
 
             <div class="class-box">
 
@@ -757,6 +1323,9 @@
             </div>
 
 
+
+            <!-- MENINGIOMA -->
+
             <div class="class-box">
 
                 <span class="class-number">
@@ -778,6 +1347,9 @@
             </div>
 
 
+
+            <!-- PITUITARY -->
+
             <div class="class-box">
 
                 <span class="class-number">
@@ -798,6 +1370,9 @@
 
             </div>
 
+
+
+            <!-- NO TUMOR -->
 
             <div class="class-box">
 
@@ -822,8 +1397,8 @@
 
         </div>
 
-    </section>
 
+    </section>
 
 
     {% endif %}
@@ -833,9 +1408,14 @@
 
 
 
+<!-- =========================================================
+     FOOTER
+     ========================================================= -->
+
 <footer>
 
     <div class="footer-content">
+
 
         <div>
 
@@ -849,9 +1429,11 @@
 
         </div>
 
+
         <p>
             Educational & Research Use
         </p>
+
 
     </div>
 
@@ -859,26 +1441,45 @@
 
 
 
+<!-- =========================================================
+     JAVASCRIPT
+     ========================================================= -->
+
 <script>
+
+
+    /* =====================================================
+       FILE UPLOAD ELEMENTS
+       ===================================================== */
 
     const fileInput =
         document.getElementById("mri_image");
 
+
     const uploadContent =
         document.getElementById("uploadContent");
+
 
     const fileSelected =
         document.getElementById("fileSelected");
 
+
     const fileName =
         document.getElementById("fileName");
+
 
     const uploadForm =
         document.getElementById("uploadForm");
 
+
     const analyzeButton =
         document.getElementById("analyzeButton");
 
+
+
+    /* =====================================================
+       FILE SELECTION
+       ===================================================== */
 
     if (fileInput) {
 
@@ -888,12 +1489,16 @@
 
                 if (this.files.length > 0) {
 
-                    uploadContent.style.display = "none";
+                    uploadContent.style.display =
+                        "none";
 
-                    fileSelected.classList.remove("hidden");
+                    fileSelected.classList.remove(
+                        "hidden"
+                    );
 
                     fileName.textContent =
                         this.files[0].name;
+
                 }
 
             }
@@ -901,6 +1506,11 @@
 
     }
 
+
+
+    /* =====================================================
+       FORM SUBMISSION
+       ===================================================== */
 
     if (uploadForm) {
 
@@ -911,7 +1521,8 @@
                 analyzeButton.innerHTML =
                     "Analyzing MRI...";
 
-                analyzeButton.disabled = true;
+                analyzeButton.disabled =
+                    true;
 
             }
         );
@@ -919,35 +1530,52 @@
     }
 
 
+
+    /* =====================================================
+       DYNAMIC PROBABILITY BARS
+       ===================================================== */
+
     const dynamicBars =
-        document.querySelectorAll(".dynamic-bar");
+        document.querySelectorAll(
+            ".dynamic-bar"
+        );
 
 
     dynamicBars.forEach(
         function (bar) {
 
+
             let value =
                 parseFloat(
-                    bar.getAttribute("data-value")
+                    bar.getAttribute(
+                        "data-value"
+                    )
                 );
 
 
             if (isNaN(value)) {
+
                 value = 0;
+
             }
 
 
             value = Math.max(
                 0,
-                Math.min(100, value)
+                Math.min(
+                    100,
+                    value
+                )
             );
 
 
             bar.style.width =
                 value + "%";
 
+
         }
     );
+
 
 </script>
 

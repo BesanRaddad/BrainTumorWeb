@@ -1727,3 +1727,1133 @@ footer {
         text-align: center;
     }
 }
+
+/* =========================================================
+   NOT A BRAIN MRI - PINK / RED STYLE
+   ========================================================= */
+
+.rejection-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 28px;
+    margin-bottom: 40px;
+}
+
+
+/* =========================================================
+   REJECTION IMAGE CARD
+   ========================================================= */
+
+.rejection-image-card,
+.rejection-card {
+    min-height: 520px;
+}
+
+
+.rejection-image-wrapper {
+    width: 100%;
+    height: 360px;
+
+    overflow: hidden;
+
+    border-radius: 18px;
+
+    margin-top: 20px;
+
+    background: rgba(0, 0, 0, 0.18);
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+.rejection-image-wrapper img {
+    width: 100%;
+    height: 100%;
+
+    object-fit: contain;
+
+    display: block;
+}
+
+
+/* =========================================================
+   REJECTION CONTENT
+   ========================================================= */
+
+.rejection-content {
+    min-height: 390px;
+
+    display: flex;
+    flex-direction: column;
+
+    align-items: center;
+    justify-content: center;
+
+    text-align: center;
+
+    padding: 30px;
+}
+
+
+/* =========================================================
+   WARNING ICON
+   TRIANGLE ONLY - NO CIRCLE
+   ========================================================= */
+
+.rejection-icon {
+    width: 92px;
+    height: 92px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    margin-bottom: 18px;
+
+    padding: 0;
+
+    color: #e6a0aa;
+
+    background: transparent !important;
+
+    border: none !important;
+
+    border-radius: 0 !important;
+
+    box-shadow: none !important;
+
+    outline: none;
+
+    font-size: 0;
+
+    line-height: 0;
+}
+
+
+/* SVG itself */
+
+.rejection-icon svg {
+    width: 74px;
+    height: 74px;
+
+    display: block;
+
+    color: #e6a0aa;
+
+    background: transparent !important;
+
+    border: none !important;
+
+    border-radius: 0 !important;
+
+    box-shadow: none !important;
+
+    overflow: visible;
+}
+
+
+/* Make sure SVG shapes use the pink/red warning color */
+
+.rejection-icon svg path,
+.rejection-icon svg line,
+.rejection-icon svg circle {
+    stroke: currentColor;
+}
+
+
+/* The small dot of the exclamation mark */
+
+.rejection-icon svg circle {
+    fill: currentColor;
+    stroke: none;
+}
+
+
+/* =========================================================
+   NOT A BRAIN MRI BADGE
+   ========================================================= */
+
+.rejection-badge {
+    display: inline-flex;
+
+    padding: 9px 16px;
+
+    border-radius: 999px;
+
+    font-size: 12px;
+    font-weight: 700;
+
+    letter-spacing: 1.2px;
+
+    margin-bottom: 18px;
+
+    color: #e6a0aa;
+
+    background: rgba(190, 83, 105, 0.12);
+
+    border: 1px solid rgba(190, 83, 105, 0.65);
+
+    box-shadow:
+        0 0 18px rgba(190, 83, 105, 0.08);
+}
+
+
+/* =========================================================
+   MAIN MESSAGE
+   ========================================================= */
+
+.rejection-content h3 {
+    font-size: 25px;
+
+    margin: 0 0 14px;
+
+    line-height: 1.35;
+}
+
+
+.rejection-content p {
+    max-width: 500px;
+
+    margin: 0 auto 12px;
+
+    line-height: 1.7;
+
+    opacity: 0.8;
+}
+
+
+.rejection-content .rejection-hint {
+    font-size: 14px;
+
+    opacity: 0.6;
+
+    margin-top: 8px;
+}
+
+
+/* =========================================================
+   VALIDATION STATUS
+   ========================================================= */
+
+.rejection-status {
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    gap: 8px;
+
+    margin-top: 20px;
+
+    font-size: 13px;
+
+    opacity: 0.65;
+}
+
+
+.rejection-status-dot {
+    width: 8px;
+    height: 8px;
+
+    flex: 0 0 8px;
+
+    border-radius: 50%;
+
+    background: #e6a0aa;
+
+    box-shadow:
+        0 0 10px rgba(230, 160, 170, 0.45);
+}
+
+
+/* =========================================================
+   FORMAT BOX
+   ========================================================= */
+
+.rejection-format-box {
+    max-width: 500px;
+
+    margin-top: 16px;
+
+    padding: 12px 18px;
+
+    border-radius: 10px;
+
+    background: rgba(255, 255, 255, 0.025);
+
+    border: 1px solid rgba(255, 255, 255, 0.08);
+
+    font-size: 13px;
+
+    line-height: 1.6;
+
+    opacity: 0.75;
+
+    text-align: center;
+}
+
+
+/* =========================================================
+   UPLOAD BUTTON
+   ========================================================= */
+
+.rejection-upload-wrapper {
+    margin-top: 24px;
+
+    display: flex;
+
+    justify-content: center;
+}
+
+
+.rejection-upload-btn {
+    border: none;
+
+    padding: 13px 22px;
+
+    border-radius: 12px;
+
+    cursor: pointer;
+
+    font-size: 14px;
+    font-weight: 700;
+
+    transition:
+        transform 0.2s ease,
+        opacity 0.2s ease;
+}
+
+
+.rejection-upload-btn:hover {
+    transform: translateY(-2px);
+
+    opacity: 0.9;
+}
+
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+
+@media (max-width: 900px) {
+
+    .rejection-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .rejection-image-card,
+    .rejection-card {
+        min-height: auto;
+    }
+
+    .rejection-image-wrapper {
+        height: 320px;
+    }
+
+}
+
+
+@media (max-width: 600px) {
+
+    .rejection-content {
+        padding: 25px 18px;
+    }
+
+    .rejection-content h3 {
+        font-size: 21px;
+    }
+
+    .rejection-image-wrapper {
+        height: 250px;
+    }
+
+    .rejection-icon {
+        width: 72px;
+        height: 72px;
+    }
+
+    .rejection-icon svg {
+        width: 58px;
+        height: 58px;
+    }
+
+}
+
+/* =========================================================
+   NEUROSCAN — COMPATIBILITY FIX
+   Restores the original design for the current HTML classes.
+   The existing design was not deleted; the HTML and CSS
+   class names had drifted apart.
+   ========================================================= */
+
+/* HEADER */
+.top-header {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    background: rgba(6, 16, 28, 0.82);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--border);
+}
+
+.header-container {
+    width: min(1180px, calc(100% - 40px));
+    height: 76px;
+    margin: auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.brand-name {
+    display: flex;
+    align-items: baseline;
+    gap: 5px;
+    font-size: 23px;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+}
+
+.brand-name span {
+    color: var(--primary);
+    font-size: 14px;
+    font-weight: 800;
+    letter-spacing: 1.4px;
+}
+
+.brand-icon {
+    flex: 0 0 42px;
+}
+
+/* HERO */
+.hero-section {
+    max-width: 850px;
+    margin: 0 auto 55px;
+    text-align: center;
+}
+
+.hero-content {
+    width: 100%;
+}
+
+.hero-label {
+    display: inline-block;
+    margin-bottom: 18px;
+    padding: 8px 13px;
+    border: 1px solid rgba(53, 209, 197, 0.18);
+    border-radius: 999px;
+    color: #b9d8d7;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 1.6px;
+    background: rgba(53, 209, 197, 0.06);
+}
+
+.hero-section h1 {
+    font-size: 56px;
+    line-height: 1.05;
+    letter-spacing: -2px;
+    font-weight: 850;
+}
+
+.hero-section h1 span {
+    color: #9fb2c1;
+    font-weight: 500;
+}
+
+.hero-section p {
+    max-width: 620px;
+    margin: 23px auto 0;
+    color: var(--text-soft);
+    font-size: 16px;
+    line-height: 1.8;
+}
+
+/* TWO-COLUMN MAIN AREA */
+.analysis-layout {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 24px;
+    align-items: stretch;
+}
+
+.upload-card,
+.result-card,
+.rejection-image-card,
+.rejection-card {
+    padding: 30px;
+    border: 1px solid var(--border);
+    border-radius: 24px;
+    background:
+        linear-gradient(
+            155deg,
+            rgba(15, 31, 49, 0.94),
+            rgba(10, 23, 38, 0.92)
+        );
+    box-shadow: var(--shadow);
+    backdrop-filter: blur(18px);
+}
+
+.upload-card {
+    min-height: 520px;
+}
+
+.result-card {
+    min-height: 520px;
+}
+
+.section-label {
+    display: block;
+    margin-bottom: 8px;
+    color: var(--primary);
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: 2px;
+}
+
+.upload-card h2,
+.result-card h2 {
+    font-size: 24px;
+    letter-spacing: -0.7px;
+}
+
+.section-description {
+    margin: 0 0 24px;
+    color: var(--text-soft);
+    font-size: 14px;
+    line-height: 1.7;
+}
+
+/* UPLOAD AREA */
+.upload-area {
+    position: relative;
+    min-height: 290px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 28px;
+    cursor: pointer;
+    text-align: center;
+    border: 1.5px dashed rgba(139, 181, 204, 0.25);
+    border-radius: 18px;
+    background: rgba(255, 255, 255, 0.018);
+    transition: all 0.25s ease;
+}
+
+.upload-area:hover,
+.upload-area.dragging {
+    transform: translateY(-2px);
+    border-color: rgba(53, 209, 197, 0.62);
+    background: rgba(53, 209, 197, 0.04);
+    box-shadow: inset 0 0 0 1px rgba(53, 209, 197, 0.05);
+}
+
+.upload-area.has-file {
+    border-color: rgba(53, 209, 197, 0.42);
+}
+
+.upload-icon {
+    width: 74px;
+    height: 74px;
+    margin: 0 auto 20px;
+    display: grid;
+    place-items: center;
+    border-radius: 22px;
+    color: var(--primary);
+    background: var(--primary-soft);
+    border: 1px solid rgba(53, 209, 197, 0.14);
+}
+
+.upload-icon svg {
+    width: 48px;
+    height: 48px;
+}
+
+.upload-title {
+    margin-bottom: 8px;
+    color: var(--text-main);
+    font-size: 19px;
+    font-weight: 700;
+}
+
+.upload-subtitle {
+    color: var(--text-soft);
+    font-size: 14px;
+}
+
+.upload-formats {
+    display: inline-block;
+    margin-top: 16px;
+    color: var(--text-muted);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1.2px;
+}
+
+/* SELECTED FILE */
+.selected-file {
+    width: 100%;
+    max-width: 370px;
+    margin: 14px auto 0;
+    display: none;
+    align-items: center;
+    gap: 14px;
+    padding: 14px 18px;
+    border-radius: 16px;
+    background: rgba(53, 209, 197, 0.07);
+    border: 1px solid rgba(53, 209, 197, 0.18);
+    color: var(--text-main);
+    font-size: 13px;
+}
+
+.selected-file.show {
+    display: flex;
+}
+
+.selected-file-icon {
+    width: 38px;
+    height: 38px;
+    flex: 0 0 38px;
+    display: grid;
+    place-items: center;
+    border-radius: 50%;
+    color: #041514;
+    font-weight: 900;
+    background: var(--primary);
+}
+
+/* ANALYZE BUTTON */
+.analyze-button {
+    width: 100%;
+    height: 54px;
+    margin-top: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    border: none;
+    border-radius: 14px;
+    cursor: pointer;
+    color: #031716;
+    font-size: 14px;
+    font-weight: 800;
+    background: linear-gradient(135deg, #62e4d9, #34c4b9);
+    box-shadow: 0 16px 35px rgba(53, 209, 197, 0.16);
+    transition: all 0.2s ease;
+}
+
+.analyze-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 20px 44px rgba(53, 209, 197, 0.24);
+}
+
+.button-arrow {
+    font-size: 18px;
+}
+
+/* RESULT */
+.result-content {
+    position: relative;
+}
+
+.result-number {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 42px;
+    height: 42px;
+    display: grid;
+    place-items: center;
+    border-radius: 13px;
+    color: var(--primary);
+    font-size: 13px;
+    font-weight: 800;
+    background: var(--primary-soft);
+    border: 1px solid rgba(53, 209, 197, 0.14);
+}
+
+.result-image-wrapper {
+    width: 100%;
+    height: 300px;
+    margin: 20px 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    border-radius: 18px;
+    background: #020912;
+    border: 1px solid rgba(164, 196, 219, 0.10);
+}
+
+.result-image-wrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    display: block;
+}
+
+.brain-status-icon,
+.brain-large-icon {
+    width: 74px;
+    height: 74px;
+    display: grid;
+    place-items: center;
+    margin: 0 auto 16px;
+    color: var(--primary);
+    border-radius: 22px;
+    background: var(--primary-soft);
+    border: 1px solid rgba(53, 209, 197, 0.14);
+}
+
+.brain-status-icon svg,
+.brain-large-icon svg {
+    width: 48px;
+    height: 48px;
+}
+
+.result-badge {
+    display: inline-flex;
+    padding: 6px 10px;
+    margin-bottom: 10px;
+    border-radius: 999px;
+    color: var(--primary);
+    background: rgba(53, 209, 197, 0.08);
+    border: 1px solid rgba(53, 209, 197, 0.16);
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 1px;
+}
+
+.result-content h3 {
+    margin-bottom: 16px;
+    font-size: 28px;
+    color: var(--text-main);
+}
+
+.confidence {
+    padding: 21px;
+    border-radius: 16px;
+    background: linear-gradient(
+        145deg,
+        rgba(53, 209, 197, 0.08),
+        rgba(79, 158, 248, 0.03)
+    );
+    border: 1px solid rgba(53, 209, 197, 0.14);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    color: var(--text-soft);
+    font-size: 13px;
+}
+
+.confidence strong {
+    color: var(--primary);
+    font-size: 14px;
+}
+
+.result-description {
+    margin-top: 20px;
+    color: var(--text-soft);
+    font-size: 14px;
+    line-height: 1.8;
+}
+
+.probability-section {
+    margin-top: 24px;
+}
+
+.probability-title {
+    margin-bottom: 18px;
+    font-size: 16px;
+    font-weight: 700;
+}
+
+.probability-row {
+    position: relative;
+    margin-bottom: 17px;
+    padding: 3px 0;
+}
+
+.probability-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 8px;
+    color: #c5d2dc;
+    font-size: 13px;
+}
+
+.probability-bar {
+    height: 6px;
+    overflow: hidden;
+    border-radius: 99px;
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.medical-disclaimer {
+    margin-top: 18px;
+    padding: 14px 16px;
+    border-radius: 13px;
+    color: #a9b9c7;
+    background: rgba(79, 158, 248, 0.045);
+    border: 1px solid rgba(79, 158, 248, 0.12);
+    font-size: 12px;
+    line-height: 1.7;
+}
+
+.medical-disclaimer strong {
+    color: #d9e5ed;
+}
+
+/* EMPTY RESULT */
+.empty-result {
+    min-height: 450px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 30px;
+}
+
+.empty-result h2 {
+    margin-bottom: 8px;
+    font-size: 24px;
+}
+
+.empty-result p {
+    max-width: 320px;
+    color: var(--text-soft);
+    font-size: 15px;
+    line-height: 1.7;
+}
+
+.waiting-status {
+    margin-top: 18px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--text-muted);
+    font-size: 12px;
+}
+
+/* CLASSIFICATIONS */
+.model-section {
+    margin-top: 72px;
+    padding: 0;
+}
+
+.model-section-title {
+    margin-bottom: 24px;
+    color: var(--primary);
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: 2px;
+}
+
+.classification-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 14px;
+}
+
+.classification-item {
+    min-height: 110px;
+    padding: 22px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    background: rgba(255, 255, 255, 0.02);
+    color: #d8e3ea;
+    transition: all 0.22s ease;
+}
+
+.classification-item:hover {
+    transform: translateY(-4px);
+    border-color: rgba(53, 209, 197, 0.24);
+    background: rgba(53, 209, 197, 0.035);
+}
+
+.classification-dot {
+    width: 8px;
+    height: 8px;
+    flex: 0 0 8px;
+    border-radius: 50%;
+    background: var(--primary);
+    box-shadow: 0 0 10px rgba(53, 209, 197, 0.35);
+}
+
+/* FOOTER */
+.footer {
+    border-top: 1px solid var(--border);
+    margin-top: 50px;
+    padding: 26px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    color: var(--text-muted);
+    font-size: 11px;
+}
+
+/* REJECTION CARDS */
+.rejection-image-card,
+.rejection-card {
+    padding: 30px;
+}
+
+.rejection-card {
+    display: flex;
+    align-items: stretch;
+}
+
+/* RESPONSIVE COMPATIBILITY */
+@media (max-width: 1000px) {
+    .analysis-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .classification-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 600px) {
+    .header-container,
+    .main-container {
+        width: calc(100% - 26px);
+    }
+
+    .system-status {
+        display: none;
+    }
+
+    .hero-section {
+        margin-bottom: 38px;
+    }
+
+    .hero-section h1 {
+        font-size: 34px;
+        letter-spacing: -1.2px;
+    }
+
+    .hero-section p {
+        font-size: 13px;
+    }
+
+    .upload-card,
+    .result-card,
+    .rejection-image-card,
+    .rejection-card {
+        padding: 21px;
+        border-radius: 19px;
+    }
+
+    .result-image-wrapper {
+        height: 260px;
+    }
+
+    .classification-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .footer {
+        flex-direction: column;
+        gap: 8px;
+        text-align: center;
+    }
+}
+/* =========================================================
+   REJECTION FIX ONLY
+   DO NOT CHANGE CLASS NAMES
+   ========================================================= */
+
+.rejection-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 28px;
+    width: 100%;
+    align-items: stretch;
+    margin-bottom: 40px;
+}
+
+.rejection-image-card,
+.rejection-card {
+    min-width: 0;
+    min-height: 520px;
+    padding: 30px;
+    box-sizing: border-box;
+}
+
+/* IMPORTANT:
+   لا نخلي rejection-card يتحول إلى flex */
+.rejection-card {
+    display: block;
+}
+
+.rejection-content {
+    width: 100%;
+    min-height: 390px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    box-sizing: border-box;
+}
+
+.rejection-icon {
+    width: 92px;
+    height: 92px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 16px;
+    padding: 0;
+
+    color: #e6a0aa;
+    background: transparent !important;
+    border: none !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+}
+
+.rejection-icon svg {
+    width: 55px !important;
+    height: 55px !important;
+    display: block;
+
+    color: #e6a0aa;
+    background: transparent !important;
+    border: none !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    overflow: visible;
+
+    transform: scale(1.45);
+    transform-origin: center center;
+}
+
+.rejection-icon svg path,
+.rejection-icon svg line,
+.rejection-icon svg circle {
+    stroke: currentColor;
+}
+
+.rejection-icon svg circle {
+    fill: currentColor;
+    stroke: none;
+}
+
+.rejection-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 9px 16px;
+    margin-bottom: 18px;
+
+    border-radius: 999px;
+
+    color: #e6a0aa;
+    background: rgba(190, 83, 105, 0.12);
+    border: 1px solid rgba(190, 83, 105, 0.65);
+
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 1.2px;
+
+    box-shadow: 0 0 18px rgba(190, 83, 105, 0.08);
+}
+
+.rejection-content h3 {
+    margin: 0 0 14px;
+    font-size: 25px;
+    line-height: 1.35;
+    text-align: center;
+}
+
+.rejection-content p {
+    max-width: 500px;
+    margin: 0 auto 12px;
+
+    line-height: 1.7;
+    text-align: center;
+    opacity: 0.8;
+}
+
+.rejection-content .rejection-hint {
+    margin-top: 8px;
+    font-size: 14px;
+    opacity: 0.6;
+}
+
+.rejection-status {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+
+    margin-top: 20px;
+
+    font-size: 13px;
+    opacity: 0.65;
+}
+
+.rejection-status-dot {
+    width: 8px;
+    height: 8px;
+    flex: 0 0 8px;
+
+    border-radius: 50%;
+    background: #e6a0aa;
+    box-shadow: 0 0 10px rgba(230, 160, 170, 0.45);
+}
+
+
+/* =========================================================
+   RESPONSIVE
+   فقط نصغّرها على الموبايل فعلًا
+   ========================================================= */
+
+@media (max-width: 700px) {
+
+    .rejection-layout {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+
+    .rejection-image-card,
+    .rejection-card {
+        min-height: auto;
+        padding: 21px;
+        border-radius: 19px;
+    }
+
+    .rejection-content {
+        min-height: 390px;
+        padding: 25px 18px;
+    }
+
+    .rejection-content h3 {
+        font-size: 21px;
+    }
+
+    .rejection-image-wrapper {
+        height: 250px;
+    }
+
+    .rejection-icon {
+        width: 72px;
+        height: 72px;
+    }
+
+    .rejection-icon svg {
+        width: 58px;
+        height: 58px;
+    }
+}
